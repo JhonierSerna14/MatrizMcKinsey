@@ -1,0 +1,123 @@
+{
+  "name": "Proyecto Matriz McKinsey - Celsia",
+  "date": "2024-05-21T14:10:33.712Z",
+  "variables": {
+    "internal": [
+      { "name": "Innovación y Desarrollo de Nuevos Negocios", "weight": 30 },
+      { "name": "Solidez Financiera y Eficiencia Operativa", "weight": 25 },
+      { "name": "Liderazgo en Sostenibilidad y Reputación ESG", "weight": 25 },
+      { "name": "Calidad y Diversificación de Activos Físicos", "weight": 20 }
+    ],
+    "external": [
+      { "name": "Potencial de Crecimiento del Mercado (Transición Energética)", "weight": 40 },
+      { "name": "Entorno Regulatorio y Estabilidad", "weight": 30 },
+      { "name": "Intensidad Competitiva y Amenaza de Sustitutos", "weight": 30 }
+    ]
+  },
+  "uens": [
+    {
+      "id": "uen_celsia_01",
+      "name": "Generación y Comercialización Tradicional",
+      "strategy": "Cosechar",
+      "marketSize": 85000000000,
+      "marketShare": 8.5,
+      "sales": 880000000,
+      "direction": { "x": 0.2, "y": 0.1 },
+      "evaluations": {
+        "internal": [2, 5, 3, 5],
+        "external": [2, 3, 2]
+      },
+      "justifications": {
+        "internal": [
+          "Baja innovación al ser el negocio tradicional y maduro.",
+          "Muy alta solidez; es la columna vertebral que aporta el 88% de los ingresos y flujos de caja estables.",
+          "Sostenibilidad media debido a la inclusión de activos térmicos que contrarrestan el perfil ESG general.",
+          "Calidad de activos muy alta, incluyendo 19 plantas hídricas e infraestructura robusta."
+        ],
+        "external": [
+          "Potencial de crecimiento bajo, ya que el crecimiento estratégico se enfoca en las renovables.",
+          "Entorno regulatorio de atractivo medio; la fuerte regulación da estabilidad pero limita la flexibilidad.",
+          "Baja atractividad debido a la alta rivalidad con competidores consolidados como EPM e ISAGEN."
+        ]
+      }
+    },
+    {
+      "id": "uen_celsia_02",
+      "name": "Energías Renovables a Gran Escala",
+      "strategy": "Escalar",
+      "marketSize": 12000000000,
+      "marketShare": 15.2,
+      "sales": 100000000,
+      "direction": { "x": 0.8, "y": 0.9 },
+      "evaluations": {
+        "internal": [4, 4, 5, 4],
+        "external": [5, 4, 3]
+      },
+      "justifications": {
+        "internal": [
+          "Alta innovación, evidenciada por la integración de baterías en granjas solares.",
+          "Alta solidez financiera, apalancada en plataformas de inversión como C2 Energía con Cubico.",
+          "Muy alta sostenibilidad; es el núcleo de la estrategia de descarbonización y reputación de la compañía.",
+          "Alta calidad de activos, con 19 granjas solares operativas y el parque eólico Carreto en desarrollo."
+        ],
+        "external": [
+          "Muy alto potencial de crecimiento, impulsado por el CONPES de Transición Energética y la promoción de renovables.",
+          "Entorno regulatorio muy favorable gracias a la Ley 1715 y nuevas reglas que incentivan estos proyectos.",
+          "Atractivo competitivo medio; el crecimiento del sector atrae nuevos competidores, aunque Celsia tiene una posición fuerte."
+        ]
+      }
+    },
+    {
+      "id": "uen_celsia_03",
+      "name": "Soluciones Energéticas y Generación Distribuida",
+      "strategy": "Desarrollar y Escalar",
+      "marketSize": 3500000000,
+      "marketShare": 18.5,
+      "sales": 60000000,
+      "direction": { "x": 0.7, "y": 0.8 },
+      "evaluations": {
+        "internal": [5, 3, 5, 3],
+        "external": [5, 4, 4]
+      },
+      "justifications": {
+        "internal": [
+          "Muy alta innovación, al ofrecer un 'portafolio multi solución' que incluye movilidad eléctrica y distritos térmicos.",
+          "Solidez financiera media, basada en modelos de coinversión como Laurel con Grupo Bancolombia.",
+          "Muy alta sostenibilidad, ya que su propuesta de valor central es 'ahorros, eficiencia y sostenibilidad' para clientes B2B.",
+          "Calidad de activos media; se basa en sistemas distribuidos en lugar de grandes plantas centralizadas."
+        ],
+        "external": [
+          "Muy alto potencial de crecimiento, convirtiendo la amenaza de la autogeneración en una oportunidad de mercado.",
+          "Entorno regulatorio muy favorable, ya que la Ley 1715 facilita la autogeneración y la venta de excedentes.",
+          "Alta atractividad competitiva; la creciente amenaza de sustitutos valida el mercado, aunque pueden surgir competidores de nicho."
+        ]
+      }
+    },
+    {
+      "id": "uen_celsia_04",
+      "name": "Nuevos Negocios Digitales (Internet y enerBit)",
+      "strategy": "Desarrollar",
+      "marketSize": 2800000000,
+      "marketShare": 4.2,
+      "sales": 57264000,
+      "direction": { "x": 0.9, "y": 0.7 },
+      "evaluations": {
+        "internal": [5, 2, 4, 2],
+        "external": [5, 3, 3]
+      },
+      "justifications": {
+        "internal": [
+          "Muy alta innovación; enerBit es pionero en control digital y Celsia Internet es un modelo de rápido crecimiento.",
+          "Baja solidez financiera actual; son negocios en etapa de crecimiento con una porción aún pequeña de los ingresos totales.",
+          "Alta sostenibilidad por su bajo impacto ambiental directo y su contribución a la digitalización.",
+          "Baja base de activos físicos propios en comparación con UENs de generación, aunque apalanca la red existente."
+        ],
+        "external": [
+          "Muy alto potencial de crecimiento, alineado con la tendencia clave de digitalización del sector.",
+          "Entorno regulatorio de atractivo medio, menos intenso que el de energía pero sujeto a normativas de telecomunicaciones.",
+          "Atractivo competitivo medio; la digitalización atrae nuevos entrantes, pero Celsia tiene ventaja por su infraestructura y base de clientes."
+        ]
+      }
+    }
+  ]
+}
