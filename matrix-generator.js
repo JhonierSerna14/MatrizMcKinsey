@@ -462,14 +462,10 @@ class MatrixMcKinsey {
         if (this.uens.length === 0) {
             // Mensaje cuando no hay UENs
             ctx.fillStyle = '#666';
-            ctx.font = '18px Arial';
+            ctx.font = '20px Arial';
             ctx.textAlign = 'center';
-            ctx.fillText('Matriz McKinsey', width / 2, height / 2 - 40);
+            ctx.fillText('', width / 2, height / 2 - 10);
 
-            ctx.font = '14px Arial';
-            ctx.fillStyle = '#999';
-            ctx.fillText('Haz clic en "Agregar UEN" para comenzar', width / 2, height / 2 - 10);
-            ctx.fillText('Configura las variables internas y externas', width / 2, height / 2 + 15);
         } else {
             this.uens.forEach(uen => {
                 const uenElement = document.getElementById(uen.id);
@@ -539,17 +535,17 @@ class MatrixMcKinsey {
         ctx.textAlign = 'center';
 
         // Eje X (Fortaleza del Negocio)
-        ctx.fillText('ALTO', 116, 40);
-        ctx.fillText('MEDIO', 300, 40);
-        ctx.fillText('BAJO', 483, 40);
+        ctx.fillText('ALTO', 116, 575);
+        ctx.fillText('MEDIO', 300, 575);
+        ctx.fillText('BAJO', 483, 575);
 
         // Eje Y (Atractivo de la Industria)
         ctx.save();
         ctx.translate(25, 300);
         ctx.rotate(-Math.PI / 2);
-        ctx.fillText('ALTO', 0, -150);
-        ctx.fillText('MEDIO', 0, 0);
-        ctx.fillText('BAJO', 0, 150);
+        ctx.fillText('ALTO', 165, 550);
+        ctx.fillText('MEDIO', 0, 550);
+        ctx.fillText('BAJO', -165, 550);
         ctx.restore();
 
         // Título de zonas estratégicas
@@ -558,9 +554,10 @@ class MatrixMcKinsey {
         ctx.textAlign = 'center';
 
         // Etiquetas de zonas
-        ctx.fillText('CRECER', 116, 575);
-        ctx.fillText('SELECCIONAR', 300, 575);
-        ctx.fillText('COSECHAR', 483, 575);
+        
+        ctx.fillText('CRECER', 116, 40);
+        ctx.fillText('SELECCIONAR', 300, 40);
+        ctx.fillText('COSECHAR', 483, 40);
     }
 
     drawUEN(ctx, uen, position) {

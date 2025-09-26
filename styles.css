@@ -346,7 +346,7 @@ button:hover {
     writing-mode: vertical-rl;
     text-orientation: mixed;
     position: absolute;
-    left: -40px;
+    left: 25px;
     top: 50%;
     transform: translateY(-50%);
 }
