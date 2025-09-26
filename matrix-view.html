@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matriz McKinsey - Vista Completa</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+        }
+        
+        .matrix-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 30px;
+        }
+        
+        .matrix-main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .matrix-title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .matrix-title h1 {
+            color: #2c3e50;
+            margin: 0 0 10px 0;
+            font-size: 2.5em;
+        }
+        
+        .matrix-title p {
+            color: #7f8c8d;
+            margin: 0;
+            font-size: 1.1em;
+        }
+        
+        #matrixCanvas {
+            border: 3px solid #34495e;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            background: white;
+        }
+        
+        .matrix-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .legend-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border: 2px solid #e9ecef;
+        }
+        
+        .legend-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            padding: 8px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid;
+            flex-shrink: 0;
+        }
+        
+        .legend-name {
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        
+        .controls-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border: 2px solid #e9ecef;
+        }
+        
+        .btn-back {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        
+        .btn-back:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        .info-section {
+            background: #e8f4fd;
+            border-radius: 10px;
+            padding: 20px;
+            border: 2px solid #bee5eb;
+        }
+        
+        .info-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #0c5460;
+            margin-bottom: 10px;
+        }
+        
+        .info-text {
+            color: #0c5460;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+        
+        @media (max-width: 1200px) {
+            .matrix-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .matrix-sidebar {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            
+            .legend-section,
+            .controls-section,
+            .info-section {
+                flex: 1;
+                min-width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-container">
+        <div class="matrix-main">
+            <div class="matrix-title">
+                <h1>🎯 Matriz McKinsey</h1>
+                <p>Análisis Estratégico de Unidades de Negocio</p>
+            </div>
+            <canvas id="matrixCanvas" width="800" height="600"></canvas>
+        </div>
+        
+        <div class="matrix-sidebar">
+            <div class="controls-section">
+                <button onclick="goBack()" class="btn-back">
+                    ← Volver a Configuración
+                </button>
+                <button onclick="exportToPDF()" class="btn-back" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
+                    📄 Exportar PDF
+                </button>
+                <button onclick="refreshMatrix()" class="btn-back" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);">
+                    🔄 Actualizar
+                </button>
+            </div>
+            
+            <div class="legend-section">
+                <div class="legend-title">
+                    🎨 Leyenda de UENs
+                </div>
+                <div id="legend-container">
+                    <!-- La leyenda se generará dinámicamente -->
+                </div>
+            </div>
+            
+            <div class="info-section">
+                <div class="info-title">ℹ️ Información</div>
+                <div class="info-text">
+                    • El tamaño del círculo representa el tamaño del mercado<br>
+                    • El sector coloreado muestra la participación de mercado<br>
+                    • Las flechas indican la dirección estratégica<br>
+                    • Cada UEN tiene un color único para facilitar identificación
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="matrix-generator.js"></script>
+    <script>
+        let matrixTool;
+
+        // Función para volver a la página principal
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+
+        // Función para actualizar la matriz
+        function refreshMatrix() {
+            if (matrixTool) {
+                matrixTool.generateMatrix();
+                updateLegend();
+            }
+        }
+
+        // Función para exportar a PDF (placeholder)
+        function exportToPDF() {
+            alert('Función de exportación a PDF - por implementar');
+        }
+
+        // Actualizar la leyenda dinámicamente
+        function updateLegend() {
+            const legendContainer = document.getElementById('legend-container');
+            
+            if (!matrixTool || matrixTool.uens.length === 0) {
+                legendContainer.innerHTML = '<p style="color: #999; font-style: italic;">No hay UENs configuradas</p>';
+                return;
+            }
+
+            legendContainer.innerHTML = '';
+            
+            matrixTool.uens.forEach(uen => {
+                const legendItem = document.createElement('div');
+                legendItem.className = 'legend-item';
+                
+                const uenColor = matrixTool.getUENColor(uen.id);
+                
+                legendItem.innerHTML = `
+                    <div class="legend-color" style="background-color: ${uenColor.fill}; border-color: ${uenColor.stroke};"></div>
+                    <div class="legend-name">${uen.name}</div>
+                `;
+                
+                legendContainer.appendChild(legendItem);
+            });
+        }
+
+        // Inicializar cuando la página carga
+        window.addEventListener('load', () => {
+            // Obtener datos del localStorage
+            const projectData = localStorage.getItem('currentMatrixProject');
+            
+            if (projectData) {
+                try {
+                    const data = JSON.parse(projectData);
+                    
+                    // Crear instancia temporal del objeto para recrear la matriz
+                    matrixTool = new MatrixMcKinsey();
+                    
+                    // Cargar los datos
+                    if (data.uens) {
+                        matrixTool.uens = data.uens;
+                    }
+                    
+                    if (data.variables) {
+                        matrixTool.matrixData = {
+                            internal: data.variables.internal || [],
+                            external: data.variables.external || []
+                        };
+                    }
+                    
+                    // Generar la matriz
+                    matrixTool.generateMatrix();
+                    updateLegend();
+                    
+                } catch (error) {
+                    console.error('Error cargando datos:', error);
+                    alert('Error cargando los datos de la matriz. Vuelve a la configuración principal.');
+                }
+            } else {
+                // No hay datos, mostrar mensaje
+                const canvas = document.getElementById('matrixCanvas');
+                const ctx = canvas.getContext('2d');
+                
+                ctx.fillStyle = '#666';
+                ctx.font = '24px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('No hay datos de matriz', canvas.width/2, canvas.height/2 - 20);
+                
+                ctx.font = '16px Arial';
+                ctx.fillStyle = '#999';
+                ctx.fillText('Configura las UENs en la página principal', canvas.width/2, canvas.height/2 + 20);
+                
+                updateLegend();
+            }
+        });
+    </script>
+</body>
+</html>

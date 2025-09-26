@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herramienta Matriz McKinsey - Automatizada</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 Matriz McKinsey - Herramienta Automatizada</h1>
+            <p>Generador automático de matrices estratégicas para la toma de decisiones</p>
+        </header>
+
+        <div class="controls-panel">
+            <button onclick="addUEN()" class="btn-primary">+ Agregar UEN</button>
+            <button onclick="generateMatrix()" class="btn-generate">🔄 Generar Matriz</button>
+            <button onclick="exportToPDF()" class="btn-export">📄 Exportar PDF</button>
+            <button onclick="saveProject()" class="btn-save">💾 Guardar Proyecto</button>
+            <button onclick="loadProject()" class="btn-load">📂 Cargar Proyecto</button>
+            
+        </div>
+
+        <div class="main-content">
+            <div class="input-section">
+                <h2>📊 Configuración de Variables y UENs</h2>
+                
+                <div class="variables-section">
+                    <h3>Variables y Pesos (%)</h3>
+                    <div class="variables-grid">
+                        <div class="internal-factors">
+                            <h4>🏢 Factores Internos (Fortaleza del Negocio)</h4>
+                            <div id="internal-variables">
+                                <!-- Variables internas se agregarán dinámicamente -->
+                            </div>
+                            <div class="weight-total">Total: <span id="internal-total">0</span>%</div>
+                            <button onclick="addVariable('internal')" class="btn-add">+ Variable</button>
+                        </div>
+
+                        <div class="external-factors">
+                            <h4>🌍 Factores Externos (Atractivo de la Industria)</h4>
+                            <div id="external-variables">
+                                <!-- Variables externas se agregarán dinámicamente -->
+                            </div>
+                            <div class="weight-total">Total: <span id="external-total">0</span>%</div>
+                            <button onclick="addVariable('external')" class="btn-add">+ Variable</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="uens-section">
+                    <h3>🎯 Unidades Estratégicas de Negocio (UENs)</h3>
+                    <div id="uens-container">
+                        <!-- Las UENs se generarán dinámicamente aquí -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="matrix-section">
+                <h2>📈 Matriz McKinsey Interactiva</h2>
+                <div class="matrix-container">
+                    <div class="matrix-legend">
+                        <div class="legend-item crecer">🚀 CRECER (Invertir/Construir)</div>
+                        <div class="legend-item seleccionar">⚖️ SELECCIONAR (Mantener/Administrar)</div>
+                        <div class="legend-item cosechar">🌾 COSECHAR (Desinvertir/Salir)</div>
+                    </div>
+                    <canvas id="matrixCanvas" width="600" height="600"></canvas>
+                    <div class="axis-labels">
+                        <div class="x-axis-label">Fortaleza del Negocio (Alto → Bajo)</div>
+                        <div class="y-axis-label">Atractivo de la Industria (Alto → Bajo)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="auto-calc-info">
+            <h3>🤖 Información sobre Cálculos Automáticos</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>💰 Tamaño Total del Mercado</h4>
+                    <p><strong>Fórmula:</strong> (Ventas Anuales ÷ Participación de Mercado) × 100</p>
+                    <p><strong>Ejemplo:</strong> Si tienes $50M en ventas y 15% de participación, el tamaño total del mercado es $333.33M</p>
+                </div>
+                <div class="info-card">
+                    <h4>🎯 Dirección Estratégica</h4>
+                    <p><strong>Cálculo:</strong> Basado en las tendencias de evaluación de factores internos y externos</p>
+                    <p><strong>Interpretación:</strong> Las flechas indican hacia dónde debe moverse la UEN para mejorar su posición</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="results-section">
+            <h2>📋 Análisis y Recomendaciones Estratégicas</h2>
+            <div id="strategic-analysis">
+                <!-- El análisis se generará automáticamente -->
+            </div>
+        </div>
+    </div>
+
+    <div id="file-input" style="display: none;">
+        <input type="file" id="project-file" accept=".json" onchange="handleFileLoad(event)">
+    </div>
+
+    <script src="matrix-generator.js"></script>
+</body>
+</html>
