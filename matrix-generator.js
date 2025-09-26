@@ -587,8 +587,8 @@ class MatrixMcKinsey {
         const { x, y } = position;
         // Tamaño de círculos balanceado para buena visualización
         const radius = Math.sqrt(uen.marketSize / 10000) * 4; // Escalado moderado
-        const maxRadius = 45;  // Radio máximo moderado
-        const minRadius = 15;  // Radio mínimo moderado
+        const maxRadius = 100;  // Radio máximo moderado
+        const minRadius = 40;  // Radio mínimo moderado
         const normalizedRadius = Math.max(minRadius, Math.min(maxRadius, radius));
 
         // Obtener color único para esta UEN

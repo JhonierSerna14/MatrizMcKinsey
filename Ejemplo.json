@@ -1,0 +1,160 @@
+{
+  "name": "Proyecto Matriz McKinsey",
+  "date": "2025-09-26T16:32:57.468Z",
+  "variables": {
+    "internal": [
+      {
+        "name": "Canales de distribución",
+        "weight": 20
+      },
+      {
+        "name": "Calidad del producto",
+        "weight": 40
+      },
+      {
+        "name": "Imagen del producto",
+        "weight": 30
+      },
+      {
+        "name": "Tecnología de la empresa",
+        "weight": 10
+      }
+    ],
+    "external": [
+      {
+        "name": "Tamaño del mercado",
+        "weight": 25
+      },
+      {
+        "name": "Crecimiento del mercado",
+        "weight": 50
+      },
+      {
+        "name": "Rentabilidad del mercado",
+        "weight": 25
+      }
+    ]
+  },
+  "uens": [
+    {
+      "id": "uen_1758904204990",
+      "name": "Tinto",
+      "marketSize": 500000,
+      "marketShare": 40,
+      "sales": 200000,
+      "direction": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "evaluations": {
+        "internal": [
+          4,
+          3,
+          3,
+          4
+        ],
+        "external": [
+          4,
+          5,
+          3
+        ]
+      }
+    },
+    {
+      "id": "uen_1758904246775",
+      "name": "Blanco",
+      "marketSize": 150000,
+      "marketShare": 80,
+      "sales": 120000,
+      "direction": {
+        "x": 0.75,
+        "y": 0
+      },
+      "evaluations": {
+        "internal": [
+          5,
+          5,
+          4,
+          4
+        ],
+        "external": [
+          3,
+          3,
+          3
+        ]
+      }
+    },
+    {
+      "id": "uen_1758904280600",
+      "name": "Rosado",
+      "marketSize": 1500000,
+      "marketShare": 20,
+      "sales": 300000,
+      "direction": {
+        "x": -1,
+        "y": -0.5
+      },
+      "evaluations": {
+        "internal": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "external": [
+          3,
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "id": "uen_1758904318577",
+      "name": "Champaña",
+      "marketSize": 400000,
+      "marketShare": 5,
+      "sales": 20000,
+      "direction": {
+        "x": -0.75,
+        "y": -0.6666666666666666
+      },
+      "evaluations": {
+        "internal": [
+          1,
+          2,
+          1,
+          2
+        ],
+        "external": [
+          2,
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "uen_1758904348818",
+      "name": "Frutales",
+      "marketSize": 87500,
+      "marketShare": 80,
+      "sales": 70000,
+      "direction": {
+        "x": 0,
+        "y": -0.5
+      },
+      "evaluations": {
+        "internal": [
+          3,
+          4,
+          3,
+          2
+        ],
+        "external": [
+          2,
+          2,
+          2
+        ]
+      }
+    }
+  ]
+}
