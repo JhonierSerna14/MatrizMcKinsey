@@ -102,7 +102,7 @@ class MatrixMcKinsey {
             { fill: 'rgba(96, 125, 139, 0.7)', stroke: '#455A64' },   // Gris azul
             { fill: 'rgba(233, 30, 99, 0.7)', stroke: '#C2185B' }     // Rosa
         ];
-        
+
         // Usar el hash del ID para seleccionar un color de forma consistente
         let hash = 0;
         for (let i = 0; i < uenId.length; i++) {
@@ -110,7 +110,7 @@ class MatrixMcKinsey {
             hash = ((hash << 5) - hash) + char;
             hash = hash & hash; // Convertir a 32-bit integer
         }
-        
+
         return colors[Math.abs(hash) % colors.length];
     }
 
@@ -136,14 +136,14 @@ class MatrixMcKinsey {
 
         this.uens.push(uen);
         this.renderUENCard(uen);
-        
+
         // Inicializar dirección estratégica después de renderizar
         setTimeout(() => {
             if (this.autoCalculateDirection) {
                 this.calculateStrategicDirection(uen);
             }
         }, 100);
-        
+
         this.generateMatrix();
     }
 
@@ -172,35 +172,15 @@ class MatrixMcKinsey {
             </div>
             
             <div class="uen-info">
-                <div class="uen-info-item">
-                    <label>💰 Tamaño Total del Mercado ($) 
-                        <span class="auto-calc-indicator" title="Calculado automáticamente: Ventas ÷ Participación × 100">🤖</span>
-                    </label>
-                    <input type="number" value="${uen.marketSize}" min="0" 
-                           onchange="matrixTool.updateUENData('${uen.id}', 'marketSize', this.value)">
-                </div>
-                <div class="uen-info-item">
-                    <label>📊 Participación de Mercado (%)</label>
-                    <input type="number" value="${uen.marketShare}" min="0" max="100" 
-                           onchange="matrixTool.updateUENData('${uen.id}', 'marketShare', this.value)">
-                </div>
-                <div class="uen-info-item">
+            <div class="uen-info-item">
                     <label>📈 Ventas Anuales ($)</label>
                     <input type="number" value="${uen.sales}" min="0" 
                            onchange="matrixTool.updateUENData('${uen.id}', 'sales', this.value)">
                 </div>
                 <div class="uen-info-item">
-                    <label>🎯 Dirección Estratégica (X, Y) 
-                        <span class="auto-calc-indicator" title="Calculado automáticamente basado en tendencias de evaluación">🤖</span>
-                    </label>
-                    <div style="display: flex; gap: 5px;">
-                        <input type="number" value="${uen.direction.x}" min="-2" max="2" step="0.1" 
-                               onchange="matrixTool.updateUENDirection('${uen.id}', 'x', this.value)" 
-                               style="width: 50%;" placeholder="X">
-                        <input type="number" value="${uen.direction.y}" min="-2" max="2" step="0.1" 
-                               onchange="matrixTool.updateUENDirection('${uen.id}', 'y', this.value)" 
-                               style="width: 50%;" placeholder="Y">
-                    </div>
+                    <label>📊 Participación de Mercado (%)</label>
+                    <input type="number" value="${uen.marketShare}" min="0" max="100" 
+                           onchange="matrixTool.updateUENData('${uen.id}', 'marketShare', this.value)">
                 </div>
             </div>
 
@@ -250,12 +230,12 @@ class MatrixMcKinsey {
             if (field === 'name') {
                 uen[field] = value;
             }
-            
+
             // Calcular automáticamente el tamaño del mercado si se modifica ventas o participación
             if ((field === 'sales' || field === 'marketShare') && this.autoCalculateMarketSize) {
                 this.calculateTotalMarketSize(uen);
             }
-            
+
             this.generateMatrix();
         }
     }
@@ -265,7 +245,7 @@ class MatrixMcKinsey {
         if (uen.sales > 0 && uen.marketShare > 0) {
             const calculatedMarketSize = (uen.sales / uen.marketShare) * 100;
             uen.marketSize = Math.round(calculatedMarketSize * 100) / 100; // Redondear a 2 decimales
-            
+
             // Actualizar la interfaz
             const uenElement = document.getElementById(uen.id);
             if (uenElement) {
@@ -294,14 +274,14 @@ class MatrixMcKinsey {
             if (!this.previousEvaluations.has(previousKey)) {
                 this.previousEvaluations.set(previousKey, uen.evaluations[type][index] || 3);
             }
-            
+
             uen.evaluations[type][index] = parseFloat(value) || 1;
-            
+
             // Calcular dirección estratégica automáticamente
             if (this.autoCalculateDirection) {
                 this.calculateStrategicDirection(uen);
             }
-            
+
             this.generateMatrix();
         }
     }
@@ -309,13 +289,13 @@ class MatrixMcKinsey {
     calculateStrategicDirection(uen) {
         // Calcular la dirección basada en las tendencias de evaluación y posición actual
         const currentPosition = this.calculatePosition(uen);
-        
+
         // Calcular tendencias promedio
         let internalTrend = 0;
         let externalTrend = 0;
         let internalCount = 0;
         let externalCount = 0;
-        
+
         // Analizar tendencias en factores internos
         uen.evaluations.internal.forEach((current, index) => {
             const previousKey = `${uen.id}_internal_${index}`;
@@ -325,7 +305,7 @@ class MatrixMcKinsey {
                 internalCount++;
             }
         });
-        
+
         // Analizar tendencias en factores externos
         uen.evaluations.external.forEach((current, index) => {
             const previousKey = `${uen.id}_external_${index}`;
@@ -335,23 +315,23 @@ class MatrixMcKinsey {
                 externalCount++;
             }
         });
-        
+
         // Calcular direcciones promedio
         const avgInternalTrend = internalCount > 0 ? internalTrend / internalCount : 0;
         const avgExternalTrend = externalCount > 0 ? externalTrend / externalCount : 0;
-        
+
         // La dirección X representa el cambio en fortaleza del negocio (factores internos)
         // La dirección Y representa el cambio en atractivo de la industria (factores externos)
         uen.direction.x = Math.max(-2, Math.min(2, avgInternalTrend * 0.5));
         uen.direction.y = Math.max(-2, Math.min(2, avgExternalTrend * 0.5));
-        
+
         // Si no hay cambios significativos, calcular dirección hacia zona óptima
         if (Math.abs(uen.direction.x) < 0.1 && Math.abs(uen.direction.y) < 0.1) {
             const targetDirection = this.calculateOptimalDirection(currentPosition);
             uen.direction.x = targetDirection.x;
             uen.direction.y = targetDirection.y;
         }
-        
+
         // Actualizar la interfaz
         this.updateDirectionInputs(uen);
     }
@@ -360,23 +340,23 @@ class MatrixMcKinsey {
         // Calcular dirección hacia la zona "CRECER" (alto-alto)
         const targetX = 116; // Posición X del centro de la zona CRECER
         const targetY = 116; // Posición Y del centro de la zona CRECER
-        
+
         let directionX = 0;
         let directionY = 0;
-        
+
         // Calcular dirección normalizada hacia la zona objetivo
         if (currentPosition.x > targetX) {
             directionX = -0.5; // Moverse hacia la izquierda (mayor fortaleza)
         } else if (currentPosition.x < targetX) {
             directionX = 0.5; // Moverse hacia la derecha puede no ser deseable, mantenemos neutro
         }
-        
+
         if (currentPosition.y > targetY) {
             directionY = -0.5; // Moverse hacia arriba (mayor atractivo)
         } else if (currentPosition.y < targetY) {
             directionY = 0.5; // Mantener o mejorar posición
         }
-        
+
         return { x: directionX, y: directionY };
     }
 
@@ -385,7 +365,7 @@ class MatrixMcKinsey {
         if (uenElement) {
             const xInput = uenElement.querySelector('input[onchange*="direction"][placeholder="X"]');
             const yInput = uenElement.querySelector('input[onchange*="direction"][placeholder="Y"]');
-            
+
             if (xInput && yInput) {
                 xInput.value = uen.direction.x.toFixed(1);
                 yInput.value = uen.direction.y.toFixed(1);
@@ -408,18 +388,18 @@ class MatrixMcKinsey {
         // Calcular puntaje ponderado para factores internos (Fortaleza del Negocio)
         let internalScore = 0;
         let internalTotalWeight = 0;
-        
+
         internalVars.forEach((variable, index) => {
             const evaluation = uen.evaluations.internal[index] || 3;
             const weight = variable.weight / 100; // Convertir porcentaje a decimal
             internalScore += evaluation * weight;
             internalTotalWeight += weight;
         });
-        
+
         // Calcular puntaje ponderado para factores externos (Atractivo de la Industria)
         let externalScore = 0;
         let externalTotalWeight = 0;
-        
+
         externalVars.forEach((variable, index) => {
             const evaluation = uen.evaluations.external[index] || 3;
             const weight = variable.weight / 100; // Convertir porcentaje a decimal
@@ -446,17 +426,17 @@ class MatrixMcKinsey {
     getStrategicZone(x, y) {
         const zoneX = Math.floor((x - 50) / (500 / 3));
         const zoneY = Math.floor((y - 50) / (500 / 3));
-        
+
         // Matriz 3x3 con zonas estratégicas
         const zones = [
             ['CRECER', 'CRECER', 'SELECCIONAR'],
             ['CRECER', 'SELECCIONAR', 'SELECCIONAR'],
             ['SELECCIONAR', 'COSECHAR', 'COSECHAR']
         ];
-        
+
         const clampedX = Math.max(0, Math.min(2, zoneX));
         const clampedY = Math.max(0, Math.min(2, zoneY));
-        
+
         return zones[clampedY][clampedX];
     }
 
@@ -484,12 +464,12 @@ class MatrixMcKinsey {
             ctx.fillStyle = '#666';
             ctx.font = '18px Arial';
             ctx.textAlign = 'center';
-            ctx.fillText('Matriz McKinsey', width/2, height/2 - 40);
-            
+            ctx.fillText('Matriz McKinsey', width / 2, height / 2 - 40);
+
             ctx.font = '14px Arial';
             ctx.fillStyle = '#999';
-            ctx.fillText('Haz clic en "Agregar UEN" para comenzar', width/2, height/2 - 10);
-            ctx.fillText('Configura las variables internas y externas', width/2, height/2 + 15);
+            ctx.fillText('Haz clic en "Agregar UEN" para comenzar', width / 2, height / 2 - 10);
+            ctx.fillText('Configura las variables internas y externas', width / 2, height / 2 + 15);
         } else {
             this.uens.forEach(uen => {
                 const uenElement = document.getElementById(uen.id);
@@ -593,7 +573,7 @@ class MatrixMcKinsey {
 
         // Obtener color único para esta UEN
         const uenColor = this.getUENColor(uen.id);
-        
+
         // Dibujar círculo principal
         ctx.beginPath();
         ctx.arc(x, y, normalizedRadius, 0, 2 * Math.PI);
@@ -632,7 +612,7 @@ class MatrixMcKinsey {
             // Punta de flecha
             const headLength = 10;
             const angle = Math.atan2(arrowY, arrowX);
-            
+
             ctx.beginPath();
             ctx.moveTo(x + arrowX, y + arrowY);
             ctx.lineTo(
@@ -650,12 +630,12 @@ class MatrixMcKinsey {
         // Etiqueta de la UEN con fondo de color
         ctx.font = 'bold 12px Arial';
         ctx.textAlign = 'center';
-        
+
         // Fondo para el texto
         const textWidth = ctx.measureText(uen.name).width;
         ctx.fillStyle = uenColor.fill;
-        ctx.fillRect(x - textWidth/2 - 5, y - normalizedRadius - 18, textWidth + 10, 16);
-        
+        ctx.fillRect(x - textWidth / 2 - 5, y - normalizedRadius - 18, textWidth + 10, 16);
+
         // Texto del nombre en blanco
         ctx.fillStyle = '#fff';
         ctx.fillText(uen.name, x, y - normalizedRadius - 6);
@@ -673,18 +653,18 @@ class MatrixMcKinsey {
         const legendX = 20;
         const legendY = 50;
         const itemHeight = 25;
-        
+
         // Título de la leyenda
         ctx.fillStyle = '#333';
         ctx.font = 'bold 14px Arial';
         ctx.textAlign = 'left';
         ctx.fillText('Unidades Estratégicas de Negocio:', legendX, legendY);
-        
+
         // Dibujar cada UEN en la leyenda
         this.uens.forEach((uen, index) => {
             const y = legendY + 25 + (index * itemHeight);
             const uenColor = this.getUENColor(uen.id);
-            
+
             // Círculo de color
             ctx.beginPath();
             ctx.arc(legendX + 10, y, 8, 0, 2 * Math.PI);
@@ -693,7 +673,7 @@ class MatrixMcKinsey {
             ctx.strokeStyle = uenColor.stroke;
             ctx.lineWidth = 2;
             ctx.stroke();
-            
+
             // Nombre de la UEN
             ctx.fillStyle = '#333';
             ctx.font = '12px Arial';
@@ -716,7 +696,7 @@ class MatrixMcKinsey {
                 // Determinar si los valores fueron calculados automáticamente
                 const marketSizeAuto = this.autoCalculateMarketSize ? ' (🤖 Calculado automáticamente)' : '';
                 const directionAuto = this.autoCalculateDirection ? ' (🤖 Calculado automáticamente)' : '';
-                
+
                 html += `
                     <div class="strategic-recommendation">
                         <h4>🎯 ${uen.name}</h4>
@@ -736,7 +716,7 @@ class MatrixMcKinsey {
             const crecer = this.uens.filter(uen => this.getStrategicZone(...Object.values(this.calculatePosition(uen))).includes('CRECER')).length;
             const seleccionar = this.uens.filter(uen => this.getStrategicZone(...Object.values(this.calculatePosition(uen))).includes('SELECCIONAR')).length;
             const cosechar = this.uens.filter(uen => this.getStrategicZone(...Object.values(this.calculatePosition(uen))).includes('COSECHAR')).length;
-            
+
             // Calcular totales del mercado
             const totalMarketSize = this.uens.reduce((sum, uen) => sum + uen.marketSize, 0);
             const totalSales = this.uens.reduce((sum, uen) => sum + uen.sales, 0);
@@ -818,14 +798,14 @@ class MatrixMcKinsey {
         const dataStr = JSON.stringify(projectData, null, 2);
         const dataBlob = new Blob([dataStr], { type: 'application/json' });
         const url = URL.createObjectURL(dataBlob);
-        
+
         const link = document.createElement('a');
         link.href = url;
         link.download = 'matriz_mckinsey_proyecto.json';
         link.click();
-        
+
         URL.revokeObjectURL(url);
-        
+
         alert('✅ Proyecto guardado exitosamente');
     }
 
@@ -907,7 +887,7 @@ class MatrixMcKinsey {
         // Capturar canvas de la matriz
         const canvas = this.canvas;
         const imgData = canvas.toDataURL('image/png');
-        
+
         // Agregar imagen de la matriz
         pdf.addImage(imgData, 'PNG', 20, 40, 120, 120);
 
@@ -924,14 +904,14 @@ class MatrixMcKinsey {
         this.uens.forEach((uen, index) => {
             const position = this.calculatePosition(uen);
             const zone = this.getStrategicZone(position.x, position.y);
-            
+
             pdf.text(`${index + 1}. ${uen.name}`, 20, yPosition);
             pdf.text(`Zona: ${zone}`, 80, yPosition);
             pdf.text(`Mercado: $${uen.marketSize}M`, 120, yPosition);
             pdf.text(`Participación: ${uen.marketShare}%`, 160, yPosition);
-            
+
             yPosition += 6;
-            
+
             if (yPosition > 190) {
                 pdf.addPage();
                 yPosition = 20;
@@ -940,7 +920,7 @@ class MatrixMcKinsey {
 
         // Guardar PDF
         pdf.save('matriz_mckinsey_analisis.pdf');
-        
+
         alert('📄 PDF exportado exitosamente');
     }
 }
@@ -975,9 +955,9 @@ function openMatrixView() {
             autoCalculateDirection: matrixTool.autoCalculateDirection
         }
     };
-    
+
     localStorage.setItem('currentMatrixProject', JSON.stringify(projectData));
-    
+
     // Abrir la nueva ventana
     window.open('matrix-view.html', '_blank', 'width=1400,height=900,scrollbars=yes,resizable=yes');
 }
@@ -1007,7 +987,7 @@ function toggleAutoCalculation(type, enabled) {
             });
         }
     }
-    
+
     // Regenerar la matriz y la interfaz
     matrixTool.generateMatrix();
     matrixTool.renderUENs();
@@ -1032,7 +1012,7 @@ function addVariable(type) {
 function toggleAutoCalculation(type, enabled) {
     if (type === 'marketSize') {
         matrixTool.autoCalculateMarketSize = enabled;
-        
+
         // Si se activa, recalcular todos los tamaños de mercado
         if (enabled) {
             matrixTool.uens.forEach(uen => {
@@ -1052,7 +1032,7 @@ function toggleAutoCalculation(type, enabled) {
         }
     } else if (type === 'direction') {
         matrixTool.autoCalculateDirection = enabled;
-        
+
         // Si se activa, recalcular todas las direcciones estratégicas
         if (enabled) {
             matrixTool.uens.forEach(uen => {
@@ -1065,7 +1045,7 @@ function toggleAutoCalculation(type, enabled) {
                 if (uenElement) {
                     const xInput = uenElement.querySelector('input[onchange*="direction"][placeholder="X"]');
                     const yInput = uenElement.querySelector('input[onchange*="direction"][placeholder="Y"]');
-                    
+
                     if (xInput && yInput) {
                         xInput.style.backgroundColor = '';
                         yInput.style.backgroundColor = '';
@@ -1074,6 +1054,6 @@ function toggleAutoCalculation(type, enabled) {
             });
         }
     }
-    
+
     matrixTool.generateMatrix();
 }
